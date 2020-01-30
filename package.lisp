@@ -2,11 +2,23 @@
 
 (cl:in-package :cl-user)
 
-(defpackage :srfi-87
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (intern (string '=>) :cl-user)
+  (intern (string 'else) :cl-user))
+
+
+(defpackage "https://github.com/g000001/srfi-87"
   (:use)
-  (:export :case))
+  (:shadowing-import-from :cl-user => else)
+  (:export case => else))
 
-(defpackage :srfi-87-internal
-  (:use :srfi-87 :cl :fiveam :mbe)
-  (:shadowing-import-from :srfi-87 :case))
 
+(defpackage "https://github.com/g000001/srfi-87#internals"
+  (:use "https://github.com/g000001/srfi-87"
+        cl
+        mbe)
+  (:shadowing-import-from "https://github.com/g000001/srfi-87" case))
+
+
+;;; *EOF*
